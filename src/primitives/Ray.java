@@ -1,52 +1,22 @@
 package primitives;
 
-public class Ray {
+public class Ray extends FixedVector {
 
-    /*----------------VARIABLES---------------------*/
-    private Vector direction;
-    private Point3D source;
-
-    /*----------------END VARIABLES-----------------*/
-
-
-    /*----------------CONSTRUCTORS------------------*/
-    public Ray(Vector dir, Point3D src) {
-        direction = new Vector(dir);
-        source = new Point3D(src);
+    public Ray(Vector dir) throws ZeroVectorException
+    {
+        super(dir);
     }
 
-    public Ray(Ray other) {
-        direction = new Vector(other.direction);
-        source = new Point3D(other.source);
-    }
-    /*----------------END CONSTRUCTORS--------------*/
-
-
-    /*----------------GETTERS/SETTERS---------------*/
-    /*----------------END GETTERS/SETTERS-----------*/
-
-
-    /*----------------ADMINISTRATION----------------*/
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (null == obj)
-            return false;
-        if (!(obj instanceof Ray))
-            return false;
-        Ray rhs = (Ray) obj;
-        return direction.equals(rhs.direction) && source.equals(rhs.source);
-
+    public Ray(Vector dir, Point3D src) throws ZeroVectorException{
+        super(dir, src);
     }
 
-    @Override
-    public String toString() {
-        return source.toString() + " + t" + direction.toString();
+    public Ray(Point3D src, Vector dir) throws ZeroVectorException
+    {
+        super(src, dir);
     }
-    /*----------------END ADMINISTRATION------------*/
 
-
-    /*----------------OPERATIONS--------------------*/
-    /*----------------END OPERATIONS----------------*/
+    public Ray(FixedVector other) throws ZeroVectorException {
+        super(other);
+    }
 }

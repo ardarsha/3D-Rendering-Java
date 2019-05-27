@@ -1,23 +1,37 @@
 package geometries;
 
-public abstract class RadialGeometry {
+/**
+ * An abstract class for representing geometries which require a radios.
+ * @author Ariel Darshan
+ */
+public abstract class RadialGeometry implements Geometry {
     /*----------------VARIABLES---------------------*/
-    private double radios;
+    private double _radios;
     /*----------------END VARIABLES-----------------*/
 
 
     /*----------------CONSTRUCTORS------------------*/
+
+    /**
+     *
+     * @param rad Radios.
+     */
     public RadialGeometry(double rad)
     {
-        radios = rad;
+        _radios = rad;
     }
     /*----------------END CONSTRUCTORS--------------*/
 
 
     /*----------------GETTERS/SETTERS---------------*/
+
+    /**
+     *
+     * @return The radios.
+     */
     public double radios()
     {
-        return radios;
+        return _radios;
     }
     /*----------------END GETTERS/SETTERS-----------*/
 
@@ -27,5 +41,9 @@ public abstract class RadialGeometry {
 
 
     /*----------------OPERATIONS--------------------*/
+//
+//    @Override
+//    public abstract Vector getNormal(Point3D p) ;
+
     /*----------------END OPERATIONS----------------*/
 }
