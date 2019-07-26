@@ -46,14 +46,20 @@ class TubeTest {
 
             // Test 4: 2 intersection points
             expected.clear();
-            expected.add(new Point3D(-1,0,0));
-            expected.add(new Point3D(0,1,1));
+            expected.add(new Point3D(-1,0,1));
+            expected.add(new Point3D(0,1,2));
             assertEquals(new TreeSet<>(expected), new TreeSet<>(tube.findIntersections(new Ray(new Point3D(-1,0,1), new Vector(1,1,1)))));
 
             // Test 5: 1 intersection point
             expected.clear();
             expected.add(new Point3D(0,1,0.5));
             assertEquals(expected, tube.findIntersections(new Ray(new Point3D(1,1,0), new Vector(-2,0,1))));
+
+            // Test 6: something that didn't work
+            expected.clear();
+            //expected.add(new Point3D(1,0,2));
+            expected.add(new Point3D(-1,0,-2));
+            assertEquals(new TreeSet<>(expected), new TreeSet<>(tube.findIntersections(new Ray(new Point3D(0.5,0,1), new Vector(-1,0,-2)))));
         }
         catch (Exception ex)
         {

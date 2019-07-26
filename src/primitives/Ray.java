@@ -16,7 +16,7 @@ public class Ray extends FixedVector {
         super(src, dir);
     }
 
-    public Ray(FixedVector other) throws ZeroVectorException {
+    public Ray(FixedVector other) {
         super(other);
     }
 }

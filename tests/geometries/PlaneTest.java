@@ -36,12 +36,12 @@ class PlaneTest {
 
             // Test 2: ray perpendicular to plane.
             result.add(new Point3D(0, 1, 0));
-            assertEquals(result, plane.findIntersections(new Ray(new Vector(1, 0, 0), new Point3D(1, 1, 0))));
+            assertEquals(result, plane.findIntersections(new Ray(new Vector(-1, 0, 0), new Point3D(1, 1, 0))));
 
             // Test 3: ray in an angle other than 90 or 180 deg.
             result.clear();
             result.add(new Point3D(0, 0.5, -1.5));
-            assertEquals(result, plane.findIntersections(new Ray(new Vector(2, 1, 2), new Point3D(1, 1, -0.5))));
+            assertEquals(result, plane.findIntersections(new Ray(new Vector(2, 1, 2), new Point3D(-1, 0, -2.5))));
 
             // Test 4: ray is null
             assertThrows(NullPointerException.class, () -> plane.findIntersections(null));

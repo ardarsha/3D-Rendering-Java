@@ -5,4 +5,5 @@ public class ZeroVectorException extends Exception {
     {
         super(ex);
     }
+    public ZeroVectorException(){super();}
 }

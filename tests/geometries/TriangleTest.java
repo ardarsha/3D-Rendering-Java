@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+import primitives.ZeroVectorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,5 +50,15 @@ class TriangleTest {
         {
             fail(ex.getMessage());
         }
+    }
+
+    @Test
+    void contains() throws ZeroVectorException {
+        Triangle triangle = new Triangle(
+                new Point3D(-100,0,-149),
+                new Point3D(0,-100,-149),
+                new Point3D(-100,-100,-149)
+        );
+        assertFalse(triangle.contains(new Point3D(0,0,-149)));
     }
 }

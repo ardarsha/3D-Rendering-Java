@@ -133,7 +133,7 @@ public class Point2D {
      * @param rhs
      * @return
      */
-    public Point2D subtract(Point2D rhs) {
+    private Point2D subtract(Point2D rhs) {
         return new Point2D(rhs._x.subtract(this._x), rhs._y.subtract(this._y));
     }
 
@@ -142,7 +142,7 @@ public class Point2D {
      * @param rhs
      * @return
      */
-    public Point2D add(Point2D rhs) {
+    protected Point2D add(Point2D rhs) {
         return new Point2D(rhs._x.add(this._x), rhs._y.add(this._y));
     }
 

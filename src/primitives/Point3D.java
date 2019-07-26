@@ -169,7 +169,7 @@ public class Point3D extends Point2D implements Comparable<Point3D>{
      * @param rhs   The point to subtract.
      * @return  A vector from rhs to this point.
      */
-    public Vector subtract(Point3D rhs) throws ZeroVectorException {
+    public Vector subtract(Point3D rhs) {
         return new Vector(subtractHelp(rhs));
     }
 

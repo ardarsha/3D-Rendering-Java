@@ -1,35 +1,29 @@
 package primitives;
 
 public class Vector {
-
-    final static public Vector ZERO = new Vector(Coordinate.ZERO, Coordinate.ZERO, Coordinate.ZERO, 0);
-    /*----------------VARIABLES---------------------*/
-    private Point3D _Head;
+    /*----------------CONSTANTS---------------------*/
+    final static public Vector ZERO = new Vector(Coordinate.ZERO, Coordinate.ZERO, Coordinate.ZERO);
     /*----------------END CONSTANTS-----------------*/
 
-    /*----------------CONSTANTS---------------------*/
-    private Vector(Coordinate x, Coordinate y, Coordinate z, int dummy) {
-        _Head = new Point3D(x, y, z);
-    }
+    /*----------------VARIABLES---------------------*/
+    private Point3D _Head;
     /*----------------END VARIABLES-----------------*/
 
 
     /*----------------CONSTRUCTORS------------------*/
-    public Vector(Coordinate x, Coordinate y, Coordinate z) throws ZeroVectorException {
+    public Vector(Coordinate x, Coordinate y, Coordinate z) {
         this(new Point3D(x, y, z));
     }
 
-    public Vector(Point3D p) throws ZeroVectorException {
+    public Vector(Point3D p) {
         _Head = new Point3D(p);
-        if (this.equals(ZERO))
-            throw new ZeroVectorException("Zero vector passed in as a parameter to CTOR of vector");
     }
 
-    public Vector(double x, double y, double z) throws ZeroVectorException {
+    public Vector(double x, double y, double z) {
         this(new Point3D(x, y, z));
     }
 
-    public Vector(Vector other) throws ZeroVectorException {
+    public Vector(Vector other) {
         this(other._Head);
     }
     /*----------------END CONSTRUCTORS--------------*/
@@ -57,54 +51,71 @@ public class Vector {
 
     @Override
     public String toString() {
-        return "[" + _Head.toString() + ']';
+        return _Head.toString().replace('(', '[').replace(')', ']');
     }
     /*----------------END ADMINISTRATION------------*/
 
 
     /*----------------OPERATIONS--------------------*/
     //public:
-    public Vector add(Vector rhs) throws ZeroVectorException {
-        Vector vector = new Vector(_Head.add(rhs));
-        if (vector.equals(ZERO))
-            throw new ZeroVectorException("Addition results in zero vector.\n\t\tv1 = " + this.toString() + "\n\t\tv2 = " + rhs.toString());
-        return vector;
+    public Vector add(Vector rhs) {
+        return new Vector(_Head.add(rhs));
     }
 
-    public Vector subtract(Vector rhs) throws ZeroVectorException {
-        Vector vector = new Vector(_Head.subtract(rhs._Head));
-        if (vector.equals(ZERO))
-            throw new ZeroVectorException("Subtraction results in zero vector.\n\t\tv1 = " + this.toString() + "\n\t\tv2 = " + rhs.toString());
-        return vector;
+    public Vector subtract(Vector rhs) {
+
+        return new Vector(_Head.subtract(rhs._Head));
     }
 
-    public Vector scale(double scalar) throws ZeroVectorException {
-        return new Vector(_Head.getX().scale(scalar), _Head.getY().scale(scalar), _Head.getZ().scale(scalar));
+    public Vector scale(double sX, double sY, double sZ) {
+        if (sX == 0 && sY == 0 && sZ == 0)
+            return ZERO;
+        return new Vector(_Head.getX().scale(sX), _Head.getY().scale(sY), _Head.getZ().scale(sZ));
+    }
+
+    public Vector scale(double scalar) {
+        return this.scale(scalar, scalar, scalar);
     }
 
     public double dotProduct(Vector rhs) throws ZeroVectorException {
-        if (0 == rhs.length())
-            throw new ZeroVectorException("Right hand side is zero.\n Hash: " + rhs.hashCode());
+        if (null == rhs)
+            throw new NullPointerException();
+        if (this.equals(ZERO) || rhs.equals(ZERO))
+            throw new ZeroVectorException();
 
-        if (0 == this.length())
-            throw new ZeroVectorException("Left hand side is zero\n Hash: " + rhs.hashCode());
         return this._Head.getX().multiply(rhs._Head.getX()).add(
                 this._Head.getY().multiply(rhs._Head.getY())).add(
                 this._Head.getZ().multiply(rhs._Head.getZ())).get();
     }
 
     public Vector crossProduct(Vector rhs) throws ZeroVectorException {
+        if (null == rhs)
+            throw new NullPointerException();
+        if (this.equals(ZERO) || rhs.equals(ZERO))
+            throw new ZeroVectorException();
+
         Coordinate x = new Coordinate(_Head.getY().multiply(rhs._Head.getZ()).subtract(_Head.getZ().multiply(rhs._Head.getY())));
         Coordinate y = new Coordinate(_Head.getZ().multiply(rhs._Head.getX()).subtract(_Head.getX().multiply(rhs._Head.getZ())));
         Coordinate z = new Coordinate(_Head.getX().multiply(rhs._Head.getY()).subtract(_Head.getY().multiply(rhs._Head.getX())));
+
+        if (x.equals(Coordinate.ZERO) && y.equals(Coordinate.ZERO) && z.equals(Coordinate.ZERO))
+            return ZERO;
         return new Vector(new Point3D(x, y, z));
     }
 
-    public double length() {
-        return _Head.distance(new Point3D(Coordinate.ZERO, Coordinate.ZERO, Coordinate.ZERO));
+    public double squared() throws ZeroVectorException {
+        if (this.equals(ZERO))
+            return 0;
+        return this.dotProduct(this);
+    }
+
+    public double length() throws ZeroVectorException {
+        return Math.sqrt(this.squared());
     }
 
     public Vector normalised() throws ZeroVectorException {
+        if (this.equals(ZERO))
+            throw new ZeroVectorException();
         return new Vector(this.scale(1 / length()));
     }
     /*----------------END OPERATIONS----------------*/

@@ -45,15 +45,13 @@ class CylinderTest {
             assertEquals(Intersectable.EmptyList, test.findIntersections(new Ray(new Point3D(3,0,0), new Vector(0,1,1))));
 
             // Test 3: intersects tube, but not cylinder
-            expected.clear();
-            expected.add(new Point3D(-1,0,0));
-            expected.add(new Point3D(0,1,1));
-            assertEquals(new TreeSet<>(expected), new TreeSet<>(test.findIntersections(new Ray(new Point3D(-1,0,1), new Vector(1,1,1)))));
+            assertEquals(Intersectable.EmptyList, test.findIntersections(new Ray(new Point3D(-1,0,2), new Vector(1,1,1))));
+
 
             // Test 4: intersects the top and bottom
             expected.clear();
             expected.add(new Point3D(0.5,0,1));
-            expected.add(new Point3D(-0.5,0,1));
+            expected.add(new Point3D(-0.5,0,-1));
             assertEquals(new TreeSet<>(expected), new TreeSet<>(test.findIntersections(new Ray(new Point3D(0.5,0,1), new Vector(-1,0,-2)))));
 
             // Test 5: intersects the top and surface
@@ -64,16 +62,14 @@ class CylinderTest {
 
             //Test 6: intersects the bottom and surface
             expected.clear();
-            expected.add(new Point3D(1,0,-0.5));
-            expected.add(new Point3D(-0.5,0,1));
-            assertEquals(new TreeSet<>(expected), new TreeSet<>(test.findIntersections(new Ray(new Point3D(0.5,0,1), new Vector(-1,0,-2)))));
+            expected.add(new Point3D(1,0,0));
+            expected.add(new Point3D(0.5,0,-1));
+            assertEquals(new TreeSet<>(expected), new TreeSet<>(test.findIntersections(new Ray(new Point3D(1,0,0), new Vector(-1,0,-2)))));
 
             // Test 7: intersects the surface once, and nothing else
             expected.clear();
             expected.add(new Point3D(0,1,0.5));
-            expected.add(new Point3D(1,0,-0.5));
-            assertEquals(new TreeSet<>(expected), new TreeSet<>(test.findIntersections(new Ray(new Point3D(1,0,-0.5), new Vector(-1.5,0,-0.5)))));
-
+            assertEquals(expected, test.findIntersections(new Ray(new Point3D(1,1,0), new Vector(-2,0,1))));
         } catch (Exception ex) {
             fail(ex.getMessage());
         }

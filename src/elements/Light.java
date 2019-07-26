@@ -1,40 +1,35 @@
-package geometries;
+package elements;
+
+import primitives.Color;
+
 
 /**
- * An abstract class for representing geometries which require a radios.
  *
  * @author Ariel Darshan
  */
-public abstract class RadialGeometry extends Geometry {
+abstract public class Light implements LightSource{
+
     /*----------------VARIABLES---------------------*/
-    private double _radios;
+    protected Color _color;
     /*----------------END VARIABLES-----------------*/
 
 
     /*----------------CONSTRUCTORS------------------*/
-
-    /**
-     * @param rad Radios.
-     */
-    public RadialGeometry(double rad) {
-        _radios = rad;
+    public Light(){
+        this._color = new Color(Color.white);
     }
 
-    public RadialGeometry(RadialGeometry other){
-        super(other);
-        this._radios = other._radios;
+    public Light(Color _color) {
+        this._color = new Color(_color);
+    }
+
+    public Light(Light other){
+        this._color = new Color(other._color);
     }
     /*----------------END CONSTRUCTORS--------------*/
 
 
     /*----------------GETTERS/SETTERS---------------*/
-
-    /**
-     * @return The radios.
-     */
-    public double radios() {
-        return _radios;
-    }
     /*----------------END GETTERS/SETTERS-----------*/
 
 
@@ -43,9 +38,8 @@ public abstract class RadialGeometry extends Geometry {
 
 
     /*----------------OPERATIONS--------------------*/
-//
-//    @Override
-//    public abstract Vector getNormal(Point3D p) ;
-
+    public Color getIntensity(){
+        return new Color(_color);
+    }
     /*----------------END OPERATIONS----------------*/
 }
